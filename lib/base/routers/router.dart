@@ -4,6 +4,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:template/presentation/main/main_page.dart';
 import 'package:template/presentation/main/main_page_wrapper.dart';
+import 'package:template/presentation/package_details/package_details.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -14,7 +15,14 @@ import 'package:template/presentation/main/main_page_wrapper.dart';
       initial: true,
       path: '/',
       children: [
-        MaterialRoute(page: MainPage, path: ''),
+        MaterialRoute(initial: true, page: MainPage, path: 'home'),
+        // MaterialRoute(page: MainPage, path: '/tour'),
+        // MaterialRoute(page: MainPage, path: '/near_me'),
+        // MaterialRoute(page: MainPage, path: '/boarding'),
+        MaterialRoute(
+            name: 'PackageDetailsRouter',
+            page: PackageDetails,
+            path: 'package_details'),
       ],
     ),
   ],

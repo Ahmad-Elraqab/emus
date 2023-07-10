@@ -4,6 +4,8 @@ import 'package:template/base/app/config/environment_config.dart';
 
 void main(List<String> args) {
   runApp(
-    App(env: EnvironmentConfig.dev),
+    App(
+      env: EnvironmentConfig.dev,
+    ),
   );
 }
