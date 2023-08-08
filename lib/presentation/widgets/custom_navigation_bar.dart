@@ -1,20 +1,39 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:template/base/app/config/app_constants.dart';
 
 class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar(
-      {super.key, required this.selected, required this.onChange});
+  const CustomNavigationBar({super.key, required this.tabsRouter});
 
-  final String selected;
-  final Function onChange;
+  final TabsRouter tabsRouter;
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar>
     with TickerProviderStateMixin {
+  onChange(e) {
+    print(e);
+    switch (e) {
+      case 'home':
+        widget.tabsRouter.setActiveIndex(0);
+        break;
+      case 'tour':
+        widget.tabsRouter.setActiveIndex(1);
+        break;
+      case 'nearby':
+        widget.tabsRouter.setActiveIndex(1);
+        break;
+      case 'boarding':
+        widget.tabsRouter.setActiveIndex(0);
+        break;
+      default:
+    }
+  }
+
   @override
   void initState() {
+    widget.tabsRouter.setActiveIndex(0);
     _controllers = List.generate(
       4,
       (index) => AnimationController(
@@ -34,9 +53,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
                 weight: 50,
               ),
             ]).animate(_controllers[index])
-              ..addListener(() {
-                setState(() {});
-              }));
+              ..addListener(() {}));
     super.initState();
   }
 
@@ -62,16 +79,18 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
           ...title.map(
             (e) => Expanded(
               child: IconButton(
-                isSelected: widget.selected == e ? true : false,
+                isSelected: widget.tabsRouter.activeIndex == title.indexOf(e)
+                    ? true
+                    : false,
                 onPressed: () {
                   final obj =
                       _controllers[title.indexOf(e)] as AnimationController;
                   obj.forward().whenComplete(() => obj.reset());
-                  widget.onChange(e);
+                  onChange(e);
                 },
                 icon: Transform.scale(
                     scale: _animations[title.indexOf(e)].value,
-                    child: widget.selected == e
+                    child: widget.tabsRouter.activeIndex == title.indexOf(e)
                         ? Image.asset('assets/images/$e.png')
                         : Image.asset('assets/images/$e-w.png')),
               ),

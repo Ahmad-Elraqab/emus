@@ -19,27 +19,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           scale: 12,
         ),
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(15.0),
-          bottomRight: Radius.circular(15.0),
-        ),
-      ),
       shadowColor: Colors.transparent,
       actions: [
-        IconButton(
-          onPressed: () => {},
-          icon: Image.asset(
-            'assets/images/menu.png',
-            scale: 3,
-          ),
-        ),
-        IconButton(
-          onPressed: () => {},
-          icon: const Icon(
-            Icons.notifications_active_outlined,
-            size: 24.0,
-            color: Colors.black,
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: IconButton(
+            onPressed: () => {},
+            icon: Image.asset('assets/images/menu.png'),
           ),
         ),
       ],

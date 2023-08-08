@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/base/app/config/app_constants.dart';
-import 'dart:math' as math;
+
+import 'package:template/presentation/widgets/custom_app_bar.dart';
 
 class PackageDetails extends StatefulWidget {
   const PackageDetails({super.key});
@@ -9,48 +10,52 @@ class PackageDetails extends StatefulWidget {
   State<PackageDetails> createState() => _PackageDetailsState();
 }
 
-class _PackageDetailsState extends State<PackageDetails> {
-  ScrollController _controller = ScrollController();
+class _PackageDetailsState extends State<PackageDetails>
+    with SingleTickerProviderStateMixin {
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     _controller.addListener(() {
       setState(() {});
     });
+    controller = TabController(length: 4, vsync: this);
     super.initState();
   }
+
+  final tabs = ['Package', 'Note', 'General Info', 'Media'];
+  TabController? controller;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios_new,
-          color: Colors.black,
-          size: 20.0,
-        ),
-        backgroundColor: primary,
-        shadowColor: Colors.transparent,
-        titleSpacing: 0.0,
-        title: const Text(
-          'Package Details',
-          style: TextStyle(
-              color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.sizeOf(context).height,
           color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 18),
+              Container(
+                  height: 46,
+                  color: const Color(0xFFFEEE9D),
+                  padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'PACKAGE DETAIL',
+                      style: TextStyle(
+                        fontFamily: 'Impact',
+                        fontSize: 16,
+                      ),
+                    ),
+                  )),
               SizedBox(
-                height: 200,
+                height: 183,
                 width: MediaQuery.sizeOf(context).width,
                 child: ListView.builder(
                   controller: _controller,
-                  padding: const EdgeInsets.only(left: 18),
                   physics: const PageScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,
@@ -60,12 +65,11 @@ class _PackageDetailsState extends State<PackageDetails> {
                       InkWell(
                         onTap: () => setState(() {}),
                         child: Container(
-                          width: MediaQuery.sizeOf(context).width - 50,
+                          width: MediaQuery.sizeOf(context).width,
                           padding: EdgeInsets.zero,
-                          margin: const EdgeInsets.only(right: 8.0),
-                          height: 200,
+                          // margin: const EdgeInsets.only(right: 8.0),
+                          height: 183,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image:
@@ -78,12 +82,12 @@ class _PackageDetailsState extends State<PackageDetails> {
                   ),
                 ),
               ),
-              const SizedBox(height: 8.0),
-              SizedBox(
-                height: 75,
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 13, left: 20, right: 18, bottom: 20),
+                height: 79,
                 width: MediaQuery.sizeOf(context).width,
                 child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 14.0),
                   physics: const PageScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,
@@ -97,10 +101,10 @@ class _PackageDetailsState extends State<PackageDetails> {
                           curve: Curves.easeOutQuad,
                         ),
                         child: Container(
-                          width: 80,
+                          width: 79,
                           padding: EdgeInsets.zero,
-                          margin: const EdgeInsets.only(left: 8.0),
-                          height: 75,
+                          margin: const EdgeInsets.only(right: 13.0),
+                          height: 79,
                           decoration: BoxDecoration(
                             border: Border.all(
                                 width: 4.0,
@@ -111,7 +115,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                                 (index + 1) * 360 - 360
                                         ? primary
                                         : Colors.transparent),
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image:
@@ -124,385 +128,61 @@ class _PackageDetailsState extends State<PackageDetails> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '4D3N BUDGET/ROMANTIC MALDIVES',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        height: 2,
-                      ),
-                    ),
-                    const Text(
-                      '4D3N BUDGET/ROMANTIC MALDIVES',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          height: 1.5),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'RM 1880.00',
-                          style: TextStyle(
-                            height: 1.5,
-                            color: primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0,
-                          ),
-                        ),
-                        const SizedBox(width: 8.0),
-                        Text(
-                          'RM 1880.00',
-                          style: TextStyle(
-                            height: 1.5,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            decoration: TextDecoration.lineThrough,
-                            decorationThickness: 2.0,
-                            decorationColor: primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Available Tickets',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 0.9,
-                      ),
-                    ),
-                    Text(
-                      'See all',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 0.9,
-                      ),
-                    ),
-                  ],
+                padding: EdgeInsets.only(left: 18.0),
+                child: Text(
+                  '4D3N BUDGET/ROMANTIC MALDIVES',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Helvetica',
+                    fontSize: 28.0,
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
-              SizedBox(
-                height: 250,
-                width: MediaQuery.sizeOf(context).width,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 14.0),
-                  physics: const PageScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (context, index) => Stack(
+              Expanded(
+                child: DefaultTabController(
+                  initialIndex: 0,
+                  length: 4,
+                  child: Column(
                     children: [
-                      Card(
-                        clipBehavior: Clip.hardEdge,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
-                        color: Colors.grey.shade200,
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width - 50,
-                        ),
-                      ),
-                      Positioned(
-                          right: 20,
-                          top: 55,
-                          child: Image.asset(
-                            'assets/images/qr.png',
-                            scale: 1.5,
-                          )),
-                      Positioned(
-                        top: 14.0,
-                        left: 18.0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              '4D3N BUDGET/ROMANTIC MALDIVES',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0,
-                                height: 1.5,
+                      TabBar(
+                        isScrollable: true,
+                        indicatorColor: Colors.black,
+                        controller: controller,
+                        onTap: (value) => {setState(() {})},
+                        tabs: [
+                          ...tabs.map(
+                            (e) => Tab(
+                              child: Text(
+                                e,
+                                style: TextStyle(
+                                  fontFamily: 'Helvetica',
+                                  fontSize: 18,
+                                  fontWeight:
+                                      controller!.index == tabs.indexOf(e)
+                                          ? FontWeight.w700
+                                          : FontWeight.normal,
+                                  color: controller!.index == tabs.indexOf(e)
+                                      ? Colors.black
+                                      : const Color(0xFF0073F6),
+                                ),
                               ),
                             ),
-                            const Text(
-                              '4D3N BUDGET/ROMANTIC MALDIVES',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                  height: 1.5),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'RM 1880.00',
-                                  style: TextStyle(
-                                    height: 2,
-                                    color: primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0,
-                                  ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Text(
-                                  'RM 1880.00',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0,
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationThickness: 2.0,
-                                    decorationColor: primary,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          )
+                        ],
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            _buildPackageTab(),
+                            const SizedBox(),
+                            const SizedBox(),
+                            const SizedBox(),
                           ],
                         ),
-                      ),
-                      Positioned(
-                        bottom: 45.0,
-                        left: 35.0,
-                        child: SizedBox(
-                          width: 300,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Kuala Lumpur',
-                                style: TextStyle(
-                                  height: 1.5,
-                                  color: primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              Text(
-                                'London',
-                                style: TextStyle(
-                                  height: 1.5,
-                                  color: primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Positioned(
-                        bottom: 20.0,
-                        left: 35.0,
-                        child: SizedBox(
-                          width: 300,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '22/06 - 18:35',
-                                style: TextStyle(
-                                  height: 1.5,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              Text(
-                                '23/06 - 06:15',
-                                style: TextStyle(
-                                  height: 1.5,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 81,
-                        child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width - 30,
-                            child: const Text(
-                              '  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                      ),
-                      Positioned(
-                        bottom: 75.0,
-                        left: 4.0,
-                        child: SizedBox(
-                          height: 30.0,
-                          width: 30.0,
-                          child: ClipPath(
-                            clipper: ClipPathClass(),
-                            child: Container(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 65,
-                        left: MediaQuery.sizeOf(context).width / 2.7,
-                        child: Image.asset(
-                          'assets/images/plane.png',
-                          scale: 1.1,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 75.0,
-                        right: 4.0,
-                        child: Transform.rotate(
-                          angle: math.pi / 180 * 180,
-                          child: SizedBox(
-                            height: 30.0,
-                            width: 30.0,
-                            child: ClipPath(
-                              clipper: ClipPathClass(),
-                              child: Container(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15.0),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top Destinations',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 0.9,
-                      ),
-                    ),
-                    Text(
-                      'See all',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        height: 0.9,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              SizedBox(
-                height: 300,
-                width: MediaQuery.sizeOf(context).width,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  physics: const PageScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemExtent: 300,
-                  itemBuilder: (context, index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Card(
-                        color: primary,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12.0),
-                          ),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Container(
-                          height: 200.0,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 12.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                                  AssetImage('assets/images/${index + 1}.jpg'),
-                            ),
-                          ),
-                          width: MediaQuery.sizeOf(context).width - 70,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Image.asset(
-                                  'assets/images/logo.png',
-                                  scale: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        ' 4D3N BUDGET/ROMANTIC MALDIVES',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                          height: 1.5,
-                        ),
-                      ),
-                      const Text(
-                        ' 4D3N BUDGET/ROMANTIC MALDIVES',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12.0,
-                        ),
-                      ),
-                      Text(
-                        ' RM 1880.00',
-                        style: TextStyle(
-                          height: 1.5,
-                          color: primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
+                      )
                     ],
                   ),
                 ),
@@ -513,18 +193,211 @@ class _PackageDetailsState extends State<PackageDetails> {
       ),
     );
   }
-}
 
-class ClipPathClass extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0.0, 0.0);
-
-    path.quadraticBezierTo(size.width, size.height / 2, 0, size.height);
-    return path;
+  Widget _buildPackageTab() => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                height: 51,
+                margin: const EdgeInsets.only(top: 24, bottom: 26),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: const Color(0xFFEEEEEE),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Select Date',
+                      style: TextStyle(
+                        fontFamily: 'Helvetica',
+                        fontSize: 18,
+                      ),
+                    ),
+                    Image(
+                      height: 16.4,
+                      width: 15,
+                      image: AssetImage('assets/images/date_4x.png'),
+                    )
+                  ],
+                ),
+              ),
+              const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Departure',
+                    style: TextStyle(
+                      fontFamily: 'Helvetica',
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Image(
+                      height: 13,
+                      width: 8.5,
+                      image: AssetImage('assets/images/d_arrows.png')),
+                  Expanded(child: SizedBox()),
+                  Text(
+                    'Price',
+                    style: TextStyle(
+                      fontFamily: 'Helvetica',
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(width: 7),
+                  Image(
+                      height: 13,
+                      width: 8.5,
+                      image: AssetImage('assets/images/d_arrows.png')),
+                ],
+              ),
+              const SizedBox(height: 18),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Container(
+                    margin: const EdgeInsets.only(bottom: 18),
+                    padding: const EdgeInsets.only(
+                        left: 23, right: 21, bottom: 21, top: 26),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color(0xFFEEEEEE),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Available',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF6DA544),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '9D7N Fascination Turkiye -2 Night Cave Hotel (01 Way Domestic)',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Departure',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Helvetica',
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '   17-09-2023',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Helvetica',
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 23),
+                        const Text(
+                          'RM 1880.00',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        const Text(
+                          'RM 5188.00',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.normal,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildButton(
+                              iconPath: 'plane_4x',
+                              title: 'Flight Detail',
+                              onClick: () => {},
+                            ),
+                            _buildButton(
+                              iconPath: 'download_4x',
+                              title: 'Download Itinerary',
+                              onClick: () => {},
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+  Widget _buildButton({String? iconPath, String? title, Function? onClick}) {
+    return InkWell(
+      onTap: () => onClick!(),
+      child: Container(
+        width: 144,
+        height: 66,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.black,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              height: 17,
+              width: 17,
+              image: AssetImage('assets/images/${iconPath!}.png'),
+            ),
+            const SizedBox(height: 7),
+            Text(
+              title!.toString(),
+              style: const TextStyle(
+                fontFamily: 'Helvetica',
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
