@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:template/base/routers/router.gr.dart';
 import 'package:template/presentation/widgets/custom_app_bar.dart';
 import 'package:template/presentation/widgets/custom_navigation_bar.dart';
+import 'package:template/presentation/widgets/search_box.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,11 +15,16 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   void initState() {
-    // tabsRouter!.setActiveIndex(0);
-
     super.initState();
   }
 
+  bool isOpen = false;
+  void onClick() => setState(() {
+        isOpen = true;
+      });
+  void onCloseClick() => setState(() {
+        isOpen = false;
+      });
   TabsRouter? tabsRouter;
   @override
   Widget build(BuildContext context) {
@@ -31,11 +37,24 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       ],
       builder: (context, child, animation) {
         tabsRouter = AutoTabsRouter.of(context);
-        // tabsRouter!.setActiveIndex(0);
 
         return Scaffold(
-          appBar: const CustomAppBar(),
-          body: child,
+          appBar: CustomAppBar(
+            onClick: onClick,
+          ),
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              width: MediaQuery.sizeOf(context).width,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  child,
+                  if (isOpen) SearchBox(onClick: onCloseClick),
+                ],
+              ),
+            ),
+          ),
           bottomNavigationBar: CustomNavigationBar(tabsRouter: tabsRouter!),
         );
       },

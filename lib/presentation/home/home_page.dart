@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Container(
         width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height - 180,
         color: Colors.white,
         child: Column(
           children: [
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const Expanded(child: DestinationBox()),
+            const DestinationBox(),
           ],
         ),
       ),
