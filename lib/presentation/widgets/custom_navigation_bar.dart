@@ -22,7 +22,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
         widget.tabsRouter.setActiveIndex(1);
         break;
       case 'nearby':
-        widget.tabsRouter.setActiveIndex(1);
+        widget.tabsRouter.setActiveIndex(2);
         break;
       case 'boarding':
         widget.tabsRouter.setActiveIndex(0);

@@ -64,7 +64,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: IconButton(
-            onPressed: () => {},
+            onPressed: () => print(Scaffold.hasDrawer(context)),
             icon: Image.asset('assets/images/menu.png'),
           ),
         ),

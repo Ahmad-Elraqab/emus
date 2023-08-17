@@ -2,6 +2,8 @@
 // `flutter pub run build_runner build --delete-conflicting-outputs`
 
 import 'package:auto_route/auto_route.dart';
+import 'package:template/presentation/agent/agent_page.dart';
+import 'package:template/presentation/agent/agent_wrapper.dart.dart';
 import 'package:template/presentation/home/home_page.dart';
 import 'package:template/presentation/home/home_wrapper.dart';
 import 'package:template/presentation/main/main_page.dart';
@@ -38,6 +40,14 @@ import 'package:template/presentation/tour/tour_wrapper.dart';
               path: 'tour',
               children: [
                 AutoRoute(path: '', page: TourPage),
+              ],
+            ),
+            AutoRoute(
+              page: AgentWrapper,
+              name: 'AgentPageRouter',
+              path: 'agent',
+              children: [
+                AutoRoute(path: '', page: AgentPage),
               ],
             ),
           ],

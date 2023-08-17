@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       routes: const [
         HomePageRouter(),
         TourPageRouter(),
-        TourPageRouter(),
+        AgentPageRouter(),
         TourPageRouter(),
       ],
       builder: (context, child, animation) {
