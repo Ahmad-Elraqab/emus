@@ -42,6 +42,26 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           appBar: CustomAppBar(
             onClick: onClick,
           ),
+          drawer: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: const Color(0xFFFEEE9D),
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height - 120,
+              padding: const EdgeInsets.all(24),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image.asset('assets/images/logo.png'),
+                  SizedBox(height: 20),
+                  Text(
+                    'Contact US',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+          ),
           body: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.sizeOf(context).height,
